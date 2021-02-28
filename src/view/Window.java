@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import controller.Observer;
 import model.Figure;
+import model.Knight;
+import model.Pawn;
 
 import java.util.ArrayList;
 
@@ -79,11 +81,40 @@ public class Window extends JFrame {
     }
 
     public void refreshContext(JSONObject board) {
-        // JSONArray figures = board.getJSONArray("board");
-        // for (int n = 0; n < figures.length(); n++) {
-        //     JSONObject figure = figures.getJSONObject(n);
-
-        // }
+        JSONArray figures = board.getJSONArray("board");
+        for (Button button : buttons) {
+            button.setText("");
+            for (int n = 0; n < figures.length(); n++) {
+                JSONObject figure = new JSONObject(figures.getString(n));
+                String type = figure.getString("type");
+                int x = figure.getInt("x");
+                int y = figure.getInt("y");
+                String color = figure.getString("color");
+                Position figurePosition = new Position(x, y);
+                if (type.equals("Pawn")) {
+                    if (color.equals("White")) {
+                        if (button.getPosition().equals(figurePosition)) {
+                            button.setText((new Pawn(figurePosition, model.Color.White)).getIcon());
+                        }
+                    } else {
+                        if (button.getPosition().equals(figurePosition)) {
+                            button.setText((new Pawn(figurePosition, model.Color.Black)).getIcon());
+                        }
+                    }
+    
+                } else if (type.equals("Knight")) {
+                    if (color.equals("White")) {
+                        if (button.getPosition().equals(figurePosition)) {
+                            button.setText((new Knight(figurePosition, model.Color.White)).getIcon());
+                        }
+                    } else {
+                        if (button.getPosition().equals(figurePosition)) {
+                            button.setText((new Knight(figurePosition, model.Color.Black)).getIcon());
+                        }
+                    }
+                }
+            }
+        }
         System.out.println(board.toString());
     }
 }

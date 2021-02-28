@@ -12,24 +12,28 @@ import org.json.JSONObject;
 import model.Command;
 
 public class Client {
-    private Socket socket;
-    private DataOutputStream dataOutputStream;
-    private DataInputStream dataInputStream;
-    private ObjectOutputStream objectOutputStream;
+    private final Socket socket;
+    private final DataOutputStream dataOutputStream;
+    private final DataInputStream dataInputStream;
+    private final ObjectOutputStream objectOutputStream;
 
-    public Client(String ip, int port) throws UnknownHostException, IOException {
+    public Client(final String ip, final int port) throws UnknownHostException, IOException {
         socket = new Socket(ip, port);
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
         dataInputStream = new DataInputStream(socket.getInputStream());
     }
 
-    public String sendMessage(String message) throws IOException {
+    public String getPlayerName() throws IOException {
+        return dataInputStream.readUTF();
+    }
+
+    public String sendMessage(final String message) throws IOException {
         dataOutputStream.writeUTF(message);
         return dataInputStream.readUTF();
     }
 
-    public String sendCommand(Command cmd) throws IOException {
+    public String sendCommand(final Command cmd) throws IOException {
         objectOutputStream.writeObject(cmd);
         return dataInputStream.readUTF();
     }

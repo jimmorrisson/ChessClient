@@ -26,7 +26,11 @@ public class BoardViewManager {
     }
 
     public static void refreshBoard(JSONObject board){
-        window.refresh();
+        // window.refresh();
         window.refreshContext(board);
+    }
+
+    public static void refresh(){
+        window.refresh();
     }
 }
