@@ -1,6 +1,7 @@
 package view;
 
 import model.Position;
+import model.Utils;
 
 import java.awt.*;
 import javax.swing.*;
@@ -10,8 +11,6 @@ import org.json.JSONObject;
 
 import controller.Observer;
 import model.Figure;
-import model.Knight;
-import model.Pawn;
 
 import java.util.ArrayList;
 
@@ -20,12 +19,10 @@ public class Window extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private ArrayList<Figure> context;
     private ArrayList<Button> buttons = new ArrayList<>();
 
-    public Window(ArrayList<Figure> context, Observer observer) {
-        super("Chess");
-        this.context = context;
+    public Window(ArrayList<Figure> context, Observer observer, String playerColor) {
+        super(playerColor);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setLayout(new GridLayout(0, 8));
@@ -34,7 +31,7 @@ public class Window extends JFrame {
             for (int row = 0; row < 8; row++) {
                 Position position = new Position(row, col);
                 Color color = Color.WHITE;
-                Figure figure = null; //context.contains(position);
+                Figure figure = null;
                 for (Figure f : context) {
                     if (f.getPosition().equals(position)) {
                         figure = f;
@@ -45,7 +42,6 @@ public class Window extends JFrame {
                     color = Color.BLACK;
                 } else {
                     color = Color.WHITE;
-                    // this.add(new Button(new Position(row, col), Color.WHITE));
                 }
                 if (figure != null) {
                     Button button = new Button(figure.getIcon(), position, color);
@@ -61,25 +57,7 @@ public class Window extends JFrame {
             }
         }
     }
-
-    public void refresh() {
-        for (Button button : buttons) {
-            Position buttonPosition = button.getPosition();
-            Figure figure = null;
-            for (Figure f : context) {
-                if (f.getPosition().equals(buttonPosition)) {
-                    figure = f;
-                    break;
-                }
-            }
-            if (figure != null) {
-                button.setText(figure.getIcon());
-            } else {
-                button.setText("");
-            }
-        }
-    }
-
+    
     public void refreshContext(JSONObject board) {
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {
@@ -91,27 +69,8 @@ public class Window extends JFrame {
                 int y = figure.getInt("y");
                 String color = figure.getString("color");
                 Position figurePosition = new Position(x, y);
-                if (type.equals("Pawn")) {
-                    if (color.equals("White")) {
-                        if (button.getPosition().equals(figurePosition)) {
-                            button.setText((new Pawn(figurePosition, model.Color.White)).getIcon());
-                        }
-                    } else {
-                        if (button.getPosition().equals(figurePosition)) {
-                            button.setText((new Pawn(figurePosition, model.Color.Black)).getIcon());
-                        }
-                    }
-    
-                } else if (type.equals("Knight")) {
-                    if (color.equals("White")) {
-                        if (button.getPosition().equals(figurePosition)) {
-                            button.setText((new Knight(figurePosition, model.Color.White)).getIcon());
-                        }
-                    } else {
-                        if (button.getPosition().equals(figurePosition)) {
-                            button.setText((new Knight(figurePosition, model.Color.Black)).getIcon());
-                        }
-                    }
+                if (button.getPosition().equals(figurePosition)) {
+                    button.setText(Utils.toFigure(type, figurePosition, color).getIcon());
                 }
             }
         }

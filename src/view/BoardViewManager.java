@@ -16,8 +16,8 @@ public class BoardViewManager {
 
     private static Window window;
 
-    public static void initializeBoard(ArrayList<Figure> context, Observer observer) {
-        window = new Window(context, observer);
+    public static void initializeBoard(ArrayList<Figure> context, Observer observer, String playerColor) {
+        window = new Window(context, observer, playerColor);
         window.setPreferredSize(new Dimension(1000, 600));
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,11 +26,6 @@ public class BoardViewManager {
     }
 
     public static void refreshBoard(JSONObject board){
-        // window.refresh();
         window.refreshContext(board);
-    }
-
-    public static void refresh(){
-        window.refresh();
     }
 }

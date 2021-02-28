@@ -2,8 +2,11 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import app.Client;
@@ -14,55 +17,35 @@ public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
     private Figure currentChosenFigure = null;
     private Client client;
+    private Timer refreshTimer;
 
     public BoardModelManager(Client client) {
         this.client = client;
+        refreshTimer = new Timer();
     }
 
     public void initializeBoard(JSONArray figures) {
         for (int n = 0; n < figures.length(); n++) {
             JSONObject figure = new JSONObject(figures.getString(n));
-
-            // JSONObject figure = figures.getJSONObject(n);
             String type = figure.getString("type");
             int x = figure.getInt("x");
             int y = figure.getInt("y");
-            String color = figure.getString("color");
-            if (type.equals("Pawn")) {
-                if (color.equals("White")) {
-                    board.add(new Pawn(new Position(x, y), model.Color.White));
-                } else {
-                    board.add(new Pawn(new Position(x, y), model.Color.Black));
-                }
-
-            } else if (type.equals("Knight")) {
-                if (color.equals("White")) {
-                    board.add(new Knight(new Position(x, y), model.Color.White));
-                } else {
-                    board.add(new Knight(new Position(x, y), model.Color.Black));
+            model.Color color = model.Utils.toColor(figure.getString("color"));
+            board.add(Utils.toFigure(type, x, y, color));
+        }
+        refreshTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("Timer task");
+                    JSONObject board = new JSONObject(client.getBoardContext().toString());
+                    BoardViewManager.refreshBoard(board);
+                } catch (JSONException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
-        }
-        // board.add(new Knight(new Position(1, 0), model.Color.White));
-        // board.add(new Pawn(new Position(1, 1), model.Color.White));
-        // board.add(new Pawn(new Position(2, 1), model.Color.White));
-        // board.add(new Pawn(new Position(3, 1), model.Color.White));
-        // board.add(new Pawn(new Position(4, 1), model.Color.White));
-        // board.add(new Pawn(new Position(5, 1), model.Color.White));
-        // board.add(new Knight(new Position(6, 0), model.Color.White));
-        // board.add(new Pawn(new Position(6, 1), model.Color.White));
-        // board.add(new Pawn(new Position(7, 1), model.Color.White));
-
-        // board.add(new Pawn(new Position(0, 6), model.Color.Black));
-        // board.add(new Knight(new Position(1, 7), model.Color.Black));
-        // board.add(new Pawn(new Position(1, 6), model.Color.Black));
-        // board.add(new Pawn(new Position(2, 6), model.Color.Black));
-        // board.add(new Pawn(new Position(3, 6), model.Color.Black));
-        // board.add(new Pawn(new Position(4, 6), model.Color.Black));
-        // board.add(new Pawn(new Position(5, 6), model.Color.Black));
-        // board.add(new Knight(new Position(6, 7), model.Color.Black));
-        // board.add(new Pawn(new Position(6, 6), model.Color.Black));
-        // board.add(new Pawn(new Position(7, 6), model.Color.Black));
+        }, 2000, 1000);
     }
 
     public ArrayList<Figure> getContext() {
@@ -80,16 +63,12 @@ public class BoardModelManager implements Observer {
 
     @Override
     public void update(Position position) {
-        if (currentChosenFigure != null) {
+    if (currentChosenFigure != null) {
             try {
                 String response = client.sendCommand(new Command(currentChosenFigure.getPosition(), position));
                 System.out.println(response);
                 if (response.equals("Yes")) {
-                    //currentChosenFigure.move(position);
                      currentChosenFigure.setPosition(position);
-                     JSONObject board = new JSONObject(client.getBoardContext().toString());
-                     BoardViewManager.refreshBoard(board);
-                    //BoardViewManager.refresh();
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
