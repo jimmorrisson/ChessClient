@@ -1,13 +1,10 @@
-package view;
+
 
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import org.json.JSONObject;
 
-import controller.Observer;
-import view.Window;
-import model.Figure;
 import java.util.ArrayList;
 
 public class BoardViewManager {

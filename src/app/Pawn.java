@@ -1,9 +1,9 @@
-package model;
+
 
 public class Pawn extends Figure {
     private boolean hasMoved = false;
 
-    public Pawn(Position position, model.Color color) {
+    public Pawn(Position position, Color color) {
         super(position, color);
     }
 
@@ -21,7 +21,7 @@ public class Pawn extends Figure {
 
     @Override
     public String getIcon() {
-        if (this.getColor() == model.Color.Black) {
+        if (this.getColor() == Color.Black) {
             return "♟︎";        
         } 
         return "♙";

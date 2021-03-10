@@ -1,10 +1,10 @@
-package model;
+
 
 public abstract class Figure {
     protected Position position;
-    private model.Color color;
+    private Color color;
 
-    public Figure(Position position, model.Color color) {
+    public Figure(Position position, Color color) {
         this.position = position;
         this.color = color;
     }
@@ -13,7 +13,7 @@ public abstract class Figure {
         return position;
     }
 
-    public model.Color getColor() {
+    public Color getColor() {
         return color;
     }
 

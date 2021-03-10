@@ -1,4 +1,4 @@
-package model;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,10 +8,6 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import app.Client;
-import controller.Observer;
-import view.BoardViewManager;
 
 public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
@@ -30,7 +26,7 @@ public class BoardModelManager implements Observer {
             String type = figure.getString("type");
             int x = figure.getInt("x");
             int y = figure.getInt("y");
-            model.Color color = model.Utils.toColor(figure.getString("color"));
+            Color color = Utils.toColor(figure.getString("color"));
             board.add(Utils.toFigure(type, x, y, color));
         }
         refreshTimer.scheduleAtFixedRate(new TimerTask() {

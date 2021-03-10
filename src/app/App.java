@@ -1,12 +1,7 @@
-package app;
-
 import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import model.BoardModelManager;
-import view.BoardViewManager;
 
 public class App {
     public static void main(String[] args) {

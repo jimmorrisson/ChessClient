@@ -1,18 +1,20 @@
-package view;
 
-import model.Position;
-import model.Utils;
+
+
+
 
 import java.awt.*;
+import java.awt.Color;
 import javax.swing.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import controller.Observer;
-import model.Figure;
+ 
+
 
 import java.util.ArrayList;
+
 
 public class Window extends JFrame {
     /**

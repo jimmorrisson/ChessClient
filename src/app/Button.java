@@ -1,11 +1,11 @@
-package view;
 
-import model.Position;
+
+
 
 import javax.swing.JButton;
 
-import controller.Observable;
-import controller.Observer;
+
+ 
 
 import java.awt.Color;
 import java.awt.Font;
