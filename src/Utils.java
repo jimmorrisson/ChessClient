@@ -1,4 +1,5 @@
 
+import chess.com.*;
 
 public class Utils {
     private Utils() {

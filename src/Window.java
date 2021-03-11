@@ -1,6 +1,7 @@
 
 
 
+import chess.com.Position;
 
 
 import java.awt.*;
@@ -9,10 +10,6 @@ import javax.swing.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
- 
-
-
 import java.util.ArrayList;
 
 

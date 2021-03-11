@@ -1,4 +1,4 @@
-
+import chess.com.Position;
 
 public class Pawn extends Figure {
     private boolean hasMoved = false;

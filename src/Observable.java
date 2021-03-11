@@ -1,5 +1,5 @@
 
-
+import chess.com.*;
 
 
 public interface Observable {

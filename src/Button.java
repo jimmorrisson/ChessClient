@@ -1,5 +1,6 @@
 
 
+import chess.com.Position;
 
 
 import javax.swing.JButton;

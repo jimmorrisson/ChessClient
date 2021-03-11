@@ -1,4 +1,4 @@
-
+import chess.com.Position;
 
 public abstract class Figure {
     protected Position position;

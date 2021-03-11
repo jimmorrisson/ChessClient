@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -8,6 +7,9 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import chess.com.Command;
+import chess.com.CommandSetPosition;
+import chess.com.Position;
 
 public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
@@ -61,11 +63,11 @@ public class BoardModelManager implements Observer {
     public void update(Position position) {
     if (currentChosenFigure != null) {
             try {
-                String response = client.sendCommand(new Command(currentChosenFigure.getPosition(), position));
+                String response = client.sendCommand(new CommandSetPosition(currentChosenFigure.getPosition(), position));
                 System.out.println(response);
-                if (response.equals("Yes")) {
-                     currentChosenFigure.setPosition(position);
-                }
+                // if (response.equals("Yes")) {
+                //      currentChosenFigure.setPosition(position);
+                // }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

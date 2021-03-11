@@ -1,4 +1,4 @@
-
+import chess.com.Position;
 
 public class Knight extends Figure {
     public Knight(Position position, Color color) {
