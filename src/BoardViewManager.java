@@ -1,5 +1,4 @@
 
-
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
@@ -22,7 +21,7 @@ public class BoardViewManager {
         window.setVisible(true);
     }
 
-    public static void refreshBoard(JSONObject board){
+    public static void refreshBoard(JSONObject board) {
         window.refreshContext(board);
     }
 }

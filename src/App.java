@@ -2,7 +2,6 @@ import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class App {
     public static void main(String[] args) {
@@ -12,7 +11,7 @@ public class App {
             JSONArray figures = client.getBoardContext().getJSONArray("board");
             boardManager.initializeBoard(figures);
             String playerColor = client.getPlayerName();
-            BoardViewManager.initializeBoard(boardManager.getContext(), boardManager, playerColor);    
+            BoardViewManager.initializeBoard(boardManager.getContext(), boardManager, playerColor);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -20,6 +19,5 @@ public class App {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        // client.stopConnection();
-   }
+    }
 }

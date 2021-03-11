@@ -1,8 +1,5 @@
 
-
-
 import chess.com.Position;
-
 
 import java.awt.*;
 import java.awt.Color;
@@ -11,7 +8,6 @@ import javax.swing.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
-
 
 public class Window extends JFrame {
     /**
@@ -56,7 +52,7 @@ public class Window extends JFrame {
             }
         }
     }
-    
+
     public void refreshContext(JSONObject board) {
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {

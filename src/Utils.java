@@ -8,7 +8,7 @@ public class Utils {
     public static Color toColor(String color) {
         if (color.toLowerCase().equals("white")) {
             return Color.White;
-        }else if (color.toLowerCase().equals("black")) {
+        } else if (color.toLowerCase().equals("black")) {
             return Color.Black;
         }
         return null;

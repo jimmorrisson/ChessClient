@@ -1,11 +1,8 @@
 
-
-
-
 public class GameController {
     private Player currentPlayer;
     private static GameController instance;
-    
+
     private GameController(Player player) {
         this.currentPlayer = player;
     }

@@ -1,5 +1,4 @@
 
-
 public class ErrorResponse extends ResponseMessage {
 
     public ErrorResponse(ErrorCode errorCode) {
