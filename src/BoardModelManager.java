@@ -7,7 +7,6 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import chess.com.Command;
 import chess.com.CommandSetPosition;
 import chess.com.Position;
 

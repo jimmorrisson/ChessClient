@@ -14,10 +14,12 @@ public class Window extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
+    private String playerColorTitle;
     private ArrayList<Button> buttons = new ArrayList<>();
 
     public Window(ArrayList<Figure> context, Observer observer, String playerColor) {
         super(playerColor);
+        playerColorTitle = playerColor;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setLayout(new GridLayout(0, 8));
@@ -54,6 +56,8 @@ public class Window extends JFrame {
     }
 
     public void refreshContext(JSONObject board) {
+        int timeLeft = board.getInt("time");
+        this.setTitle(playerColorTitle + ", Time left " + timeLeft);
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {
             button.setText("");
