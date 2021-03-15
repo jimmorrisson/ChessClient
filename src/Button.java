@@ -19,8 +19,6 @@ public class Button extends JButton implements ActionListener, Observable {
     private Position position;
 
     public Button(String icon, Position position, Color color) {
-        // super("(" + String.valueOf(position.getX()) + "," +
-        // String.valueOf(position.getY()) + ")");
         super(icon);
         this.position = position;
         setBackground(color);

@@ -20,6 +20,9 @@ public class Utils {
         } else if (type.equals("Knight")) {
             return new Knight(position, color);
         }
+        else if (type.equals("Rook")) {
+            return new Rook(position, color);
+        }
         return null;
     }
 

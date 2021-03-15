@@ -12,7 +12,7 @@ import chess.com.Position;
 
 public class BoardModelManager implements Observer {
     private ArrayList<Figure> board = new ArrayList<>();
-    private Figure currentChosenFigure = null;
+    private Position currentChosenPosition = null;
     private Client client;
     private Timer refreshTimer;
 
@@ -34,7 +34,6 @@ public class BoardModelManager implements Observer {
             @Override
             public void run() {
                 try {
-                    System.out.println("Timer task");
                     JSONObject board = new JSONObject(client.getBoardContext().toString());
                     BoardViewManager.refreshBoard(board);
                 } catch (JSONException | IOException e) {
@@ -48,32 +47,20 @@ public class BoardModelManager implements Observer {
     public ArrayList<Figure> getContext() {
         return board;
     }
-
-    private Figure findFigure(Position position) {
-        for (Figure figure : board) {
-            if (figure.getPosition().equals(position)) {
-                return figure;
-            }
-        }
-        return null;
-    }
-
+    
     @Override
     public void update(Position position) {
-    if (currentChosenFigure != null) {
+    if (currentChosenPosition != null) {
             try {
-                String response = client.sendCommand(new CommandSetPosition(currentChosenFigure.getPosition(), position));
+                String response = client.sendCommand(new CommandSetPosition(currentChosenPosition, position));
                 System.out.println(response);
-                // if (response.equals("Yes")) {
-                //      currentChosenFigure.setPosition(position);
-                // }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            currentChosenFigure = null;
+            currentChosenPosition = null;
         }
 
-        currentChosenFigure = findFigure(position);
+        currentChosenPosition = position;
     }
 }

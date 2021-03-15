@@ -14,16 +14,43 @@ public class Window extends JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private String playerColorTitle;
     private ArrayList<Button> buttons = new ArrayList<>();
+    private Label lblWhiteTime;
+    private Label lblBlackTime;
+
+    protected void addbutton(Button button, GridBagLayout gridbag, GridBagConstraints c) {
+        gridbag.setConstraints(button, c);
+        buttons.add(button);
+        add(button);
+    }
 
     public Window(ArrayList<Figure> context, Observer observer, String playerColor) {
         super(playerColor);
-        playerColorTitle = playerColor;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setLayout(new GridLayout(0, 8));
+        Container panel = getContentPane();
+        GridBagLayout gridbag = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
 
+        panel.setLayout(gridbag);
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 4;
+        c.weighty = 1.0;
+
+        lblBlackTime = new Label("Test");
+        gridbag.setConstraints(lblBlackTime, c);
+        this.add(lblBlackTime);
+        c.gridy = 4;
+        lblWhiteTime = new Label("Test");
+        gridbag.setConstraints(lblWhiteTime, c);
+        this.add(lblWhiteTime);
+        c.gridheight = 1;
+        c.gridx = 1;
+        c.gridy = 0;
         for (int col = 7; col >= 0; col--) {
             for (int row = 0; row < 8; row++) {
                 Position position = new Position(row, col);
@@ -43,21 +70,34 @@ public class Window extends JFrame {
                 if (figure != null) {
                     Button button = new Button(figure.getIcon(), position, color);
                     button.addObserver(observer);
-                    buttons.add(button);
-                    this.add(button);
+                    if (row == 0) {
+                        c.gridy += 1;
+                        c.gridx = 1;
+                    } else {
+                        c.gridx += 1;
+                    }
+                    addbutton(button, gridbag, c);
                 } else {
                     Button button = new Button(null, position, color);
                     button.addObserver(observer);
-                    buttons.add(button);
-                    this.add(button);
+                   
+                    if (row == 0) {
+                        c.gridy += 1;
+                        c.gridx = 1;
+                    } else {
+                        c.gridx += 1;
+                    }
+                    addbutton(button, gridbag, c);
                 }
             }
         }
     }
 
     public void refreshContext(JSONObject board) {
-        int timeLeft = board.getInt("time");
-        this.setTitle(playerColorTitle + ", Time left " + timeLeft);
+        int whiteTimeLeft = board.getInt("time_white");
+        lblWhiteTime.setText("Time left: " + whiteTimeLeft);
+        int blackTimeLeft = board.getInt("time_black");
+        lblBlackTime.setText("Time left: " + blackTimeLeft);
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {
             button.setText("");
@@ -73,6 +113,5 @@ public class Window extends JFrame {
                 }
             }
         }
-        System.out.println(board.toString());
     }
 }
