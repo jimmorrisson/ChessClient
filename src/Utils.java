@@ -29,6 +29,9 @@ public class Utils {
         else if (type.equals("King")) {
             return new King(position, color);
         }
+        else if (type.equals("Queen")) {
+            return new Queen(position, color);
+        }
         return null;
     }
 
