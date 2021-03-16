@@ -23,6 +23,9 @@ public class Utils {
         else if (type.equals("Rook")) {
             return new Rook(position, color);
         }
+        else if (type.equals("Bishop")) {
+            return new Bishop(position, color);
+        }
         return null;
     }
 
