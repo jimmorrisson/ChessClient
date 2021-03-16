@@ -53,6 +53,9 @@ public class BoardModelManager implements Observer {
     if (currentChosenPosition != null) {
             try {
                 String response = client.sendCommand(new CommandSetPosition(currentChosenPosition, position));
+                if (response.contains("won")) {
+                    BoardViewManager.handleEnd(response);
+                }
                 System.out.println(response);
             } catch (IOException e) {
                 // TODO Auto-generated catch block

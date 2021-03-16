@@ -24,4 +24,8 @@ public class BoardViewManager {
     public static void refreshBoard(JSONObject board) {
         window.refreshContext(board);
     }
+
+    public static void handleEnd(String endText) {
+        window.setTitle(endText);
+    }
 }
