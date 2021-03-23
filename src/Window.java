@@ -6,6 +6,7 @@ import java.awt.Color;
 import javax.swing.*;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class Window extends JFrame {
                 } else {
                     Button button = new Button(null, position, color);
                     button.addObserver(observer);
-                   
+
                     if (row == 0) {
                         c.gridy += 1;
                         c.gridx = 1;
@@ -94,10 +95,23 @@ public class Window extends JFrame {
     }
 
     public void refreshContext(JSONObject board) {
+        System.out.println(board.toString());
         int whiteTimeLeft = board.getInt("time_white");
         lblWhiteTime.setText("Time left: " + whiteTimeLeft);
         int blackTimeLeft = board.getInt("time_black");
         lblBlackTime.setText("Time left: " + blackTimeLeft);
+        String whiteState = board.getString("player_White");
+        if (whiteState.contains("lost")) {
+            handleEnd("Player black won!");
+        }
+        try {
+            String blackState = board.getString("player_Black");
+            if (blackState.contains("lost")) {
+                handleEnd("Player white won!");
+            }
+        } catch (JSONException e) {
+
+        }
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {
             button.setText("");
@@ -113,5 +127,20 @@ public class Window extends JFrame {
                 }
             }
         }
+    }
+
+    private void addComponentsToThePane(Container pane, String text) {
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        JLabel endTextLabel = new JLabel(text);
+        this.add(endTextLabel);
+    }
+
+    private void handleEnd(String endText) {
+        Container pane = this.getContentPane();
+        pane.removeAll();
+        pane.repaint();
+        addComponentsToThePane(pane, endText);
+        this.pack();
+        this.setVisible(true);
     }
 }
