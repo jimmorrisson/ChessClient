@@ -95,7 +95,6 @@ public class Window extends JFrame {
     }
 
     public void refreshContext(JSONObject board) {
-        System.out.println(board.toString());
         int whiteTimeLeft = board.getInt("time_white");
         lblWhiteTime.setText("Time left: " + whiteTimeLeft);
         int blackTimeLeft = board.getInt("time_black");

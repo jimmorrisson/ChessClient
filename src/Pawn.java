@@ -22,7 +22,7 @@ public class Pawn extends Figure {
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
-            return "♟︎";
+            return "♟";
         }
         return "♙";
     }
