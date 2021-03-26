@@ -37,8 +37,7 @@ public class BoardModelManager implements Observer {
                     JSONObject board = new JSONObject(client.getBoardContext().toString());
                     BoardViewManager.refreshBoard(board);
                 } catch (JSONException | IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    System.out.println(e.toString());
                 }
             }
         }, 2000, 1000);
@@ -55,8 +54,7 @@ public class BoardModelManager implements Observer {
                 String response = client.sendCommand(new CommandSetPosition(currentChosenPosition, position));
                 System.out.println(response);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                System.out.println(e.toString());
             }
             currentChosenPosition = null;
         }

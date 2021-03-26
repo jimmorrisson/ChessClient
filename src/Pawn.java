@@ -3,10 +3,20 @@ import chess.com.Position;
 public class Pawn extends Figure {
     private boolean hasMoved = false;
 
+    
+    /** 
+     * @param position
+     * @param color
+     */
     public Pawn(Position position, Color color) {
         super(position, color);
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     public boolean move(Position position) {
         if (isValid(position)) {
@@ -19,6 +29,10 @@ public class Pawn extends Figure {
         return false;
     }
 
+    
+    /** 
+     * @return String
+     */
     @Override
     public String getIcon() {
         if (this.getColor() == Color.Black) {
@@ -27,6 +41,11 @@ public class Pawn extends Figure {
         return "♙";
     }
 
+    
+    /** 
+     * @param position
+     * @return boolean
+     */
     @Override
     protected boolean isValid(Position position) {
         if (hasMoved == false) {

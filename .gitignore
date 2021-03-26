@@ -1,3 +1,9 @@
 /bin/
 .*
 *.class
+*.js
+*.zip
+*.css
+src/element-list
+src/jquery/
+src/resources/

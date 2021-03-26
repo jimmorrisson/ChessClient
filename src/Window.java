@@ -19,12 +19,24 @@ public class Window extends JFrame {
     private Label lblWhiteTime;
     private Label lblBlackTime;
 
+    
+    /** Adds button to the layout
+     * @param button
+     * @param gridbag
+     * @param c Constraints
+     */
     protected void addbutton(Button button, GridBagLayout gridbag, GridBagConstraints c) {
         gridbag.setConstraints(button, c);
         buttons.add(button);
         add(button);
     }
 
+    
+    /** Window constructor
+     * @param context Board context that contains all figures.
+     * @param observer
+     * @param playerColor Current player color
+     */
     public Window(ArrayList<Figure> context, Observer observer, String playerColor) {
         super(playerColor);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,22 +106,26 @@ public class Window extends JFrame {
         }
     }
 
+    
+    /** Handles refresh of the board
+     * @param board JSON object that contains context of the board
+     */
     public void refreshContext(JSONObject board) {
-        int whiteTimeLeft = board.getInt("time_white");
-        lblWhiteTime.setText("Time left: " + whiteTimeLeft);
-        int blackTimeLeft = board.getInt("time_black");
-        lblBlackTime.setText("Time left: " + blackTimeLeft);
-        String whiteState = board.getString("player_White");
-        if (whiteState.contains("lost")) {
-            handleEnd("Player black won!");
-        }
         try {
+            int whiteTimeLeft = board.getInt("time_white");
+            lblWhiteTime.setText("Time left: " + whiteTimeLeft);
+            String whiteState = board.getString("player_White");
+            if (whiteState.contains("lost")) {
+                handleEnd("Player black won!");
+            }    
+            int blackTimeLeft = board.getInt("time_black");
+            lblBlackTime.setText("Time left: " + blackTimeLeft);    
             String blackState = board.getString("player_Black");
             if (blackState.contains("lost")) {
                 handleEnd("Player white won!");
             }
         } catch (JSONException e) {
-
+            System.out.println(e);
         }
         JSONArray figures = board.getJSONArray("board");
         for (Button button : buttons) {
@@ -128,12 +144,21 @@ public class Window extends JFrame {
         }
     }
 
+    
+    /** Adds label to the pane.
+     * @param pane
+     * @param text label text.
+     */
     private void addComponentsToThePane(Container pane, String text) {
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         JLabel endTextLabel = new JLabel(text);
         this.add(endTextLabel);
     }
 
+    
+    /** Handles end condition callback in GUI.
+     * @param endText text that is suppose to be shown on the end of the game
+     */
     private void handleEnd(String endText) {
         Container pane = this.getContentPane();
         pane.removeAll();

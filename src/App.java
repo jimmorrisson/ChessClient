@@ -4,6 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class App {
+    
+    /** Main method of the program
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             Client client = new Client("localhost", 4441);
@@ -13,11 +17,10 @@ public class App {
             String playerColor = client.getPlayerName();
             BoardViewManager.initializeBoard(boardManager.getContext(), boardManager, playerColor);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Fatal error");
+            System.exit(0);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 }
